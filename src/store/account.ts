@@ -1,4 +1,3 @@
-// import { createStore } from "redux";
 import { AccountAction, AccountState } from "../types";
 
 const initialState: AccountState = {
@@ -34,8 +33,6 @@ const accountReducer = (state: AccountState = initialState, action: AccountActio
       return state;
   }
 };
-
-// const accountStore = createStore(accountReducer);
 
 const deposit = (amount: number): AccountAction => {
   return { type: "account/deposit", payload: amount };

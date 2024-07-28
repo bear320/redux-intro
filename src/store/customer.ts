@@ -1,4 +1,3 @@
-import { createStore } from "redux";
 import { CustomerState, CustomerAction } from "../types";
 
 const initialState: CustomerState = {
@@ -19,8 +18,6 @@ const customerReducer = (state: CustomerState = initialState, action: CustomerAc
       return state;
   }
 };
-
-// const customerStore = createStore(customerReducer);
 
 const createCustomer = (fullName: string, nationalId: string): CustomerAction => {
   return { type: "customer/create", payload: { fullName, nationalId, createdAt: new Date().toISOString() } };
