@@ -50,4 +50,5 @@ const payLoan = (): AccountAction => {
   return { type: "account/payLoan" };
 };
 
-export { accountReducer, deposit, withdraw, requestLoan, payLoan };
+export default accountReducer;
+export { deposit, withdraw, requestLoan, payLoan };

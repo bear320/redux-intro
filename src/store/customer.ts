@@ -27,4 +27,5 @@ const updateName = (fullName: string): CustomerAction => {
   return { type: "customer/updateName", payload: fullName };
 };
 
-export { customerReducer, createCustomer, updateName };
+export default customerReducer;
+export { createCustomer, updateName };
