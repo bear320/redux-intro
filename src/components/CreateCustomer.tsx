@@ -1,10 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createCustomer } from "../store";
 
 const CreateCustomer = () => {
   const [fullName, setFullName] = useState("");
   const [nationalId, setNationalId] = useState("");
 
-  const handleClick = () => {};
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    if (fullName && nationalId) {
+      dispatch(createCustomer(fullName, nationalId));
+    }
+  };
 
   return (
     <div>
