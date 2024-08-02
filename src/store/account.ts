@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
 import { AccountAction, AccountState } from "../types";
-import store from "../store";
 
 const initialState: AccountState = {
   isLoading: false,
