@@ -1,4 +1,4 @@
-import { CustomerState, CustomerAction } from "../types";
+import { CustomerState, CustomerAction } from "../../types/customer";
 
 const initialState: CustomerState = {
   fullName: "",

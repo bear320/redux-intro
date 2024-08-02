@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../types";
-import { deposit, payLoan, requestLoan, withdraw } from "../store";
+import { deposit, payLoan, requestLoan, useAppDispatch, withdraw } from "../store";
 
 const AccountOperations = () => {
   const [depositAmount, setDepositAmount] = useState(0);
@@ -16,7 +16,7 @@ const AccountOperations = () => {
     loan: currentLoan,
     loanPurpose: currentLoanPurpose,
   } = useSelector((store: RootState) => store.account);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDeposit = () => {
     if (depositAmount > 0) {

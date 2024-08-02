@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "./types";
+import { RootState } from "./store";
 import AccountOperations from "./components/AccountOperations";
 import Balance from "./components/Balance";
 import CreateCustomer from "./components/CreateCustomer";
