@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../types";
-import { deposit, payLoan, requestLoan, useAppDispatch, withdraw } from "../store";
+import { RootState } from "../store";
+import { useAppDispatch } from "../hooks";
+import { deposit, withdraw, requestLoan, payLoan } from "../features/account/accountSlice";
 
 const AccountOperations = () => {
   const [depositAmount, setDepositAmount] = useState(0);
@@ -20,7 +21,7 @@ const AccountOperations = () => {
 
   const handleDeposit = () => {
     if (depositAmount > 0) {
-      dispatch(deposit(depositAmount, currency));
+      dispatch(deposit({ amount: depositAmount, currency }));
       setDepositAmount(0);
       setCurrency("USD");
     }

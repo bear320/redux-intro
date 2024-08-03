@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { AccountState, AccountAction } from "../../types/account";
+
+export type AccountState = {
+  isLoading: boolean;
+  balance: number;
+  loan: number;
+  loanPurpose: string;
+};
 
 const initialState: AccountState = {
   isLoading: false,
@@ -9,74 +15,35 @@ const initialState: AccountState = {
   loanPurpose: "",
 };
 
-export const accountSlice = createSlice({
+const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
     deposit: (state, action: PayloadAction<{ amount: number; currency: string }>) => {
       state.balance += action.payload.amount;
     },
+    withdraw: (state, action: PayloadAction<number>) => {
+      state.balance -= action.payload;
+    },
+    requestLoan: {
+      prepare: (amount: number, purpose: string) => ({
+        payload: { amount, purpose },
+      }),
+      reducer: (state, action: PayloadAction<{ amount: number; purpose: string }>) => {
+        if (state.loan > 0) return;
+        state.balance += action.payload.amount;
+        state.loan = action.payload.amount;
+        state.loanPurpose = action.payload.purpose;
+      },
+    },
+    payLoan: (state) => {
+      state.balance -= state.loan;
+      state.loan = 0;
+      state.loanPurpose = "";
+    },
   },
 });
 
-// const accountReducer = (state: AccountState = initialState, action: AccountAction): AccountState => {
-//   switch (action.type) {
-//     case "account/deposit":
-//       return { ...state, balance: state.balance + action.payload.amount, isLoading: false };
+export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
 
-//     case "account/withdraw":
-//       if (state.balance - action.payload < 0) {
-//         throw new Error("Insufficient funds for withdrawal");
-//       }
-//       return { ...state, balance: state.balance - action.payload };
-
-//     case "account/requestLoan":
-//       if (state.loan > 0) return state;
-//       return {
-//         ...state,
-//         balance: state.balance + action.payload.amount,
-//         loan: action.payload.amount,
-//         loanPurpose: action.payload.purpose,
-//       };
-
-//     case "account/payLoan":
-//       return { ...state, balance: state.balance - state.loan, loan: 0, loanPurpose: "" };
-
-//     case "account/convertingCurrent":
-//       return { ...state, isLoading: true };
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const deposit = (
-//   amount: number,
-//   currency: string
-// ): AccountAction | ((dispatch: AppDispatch, getState: () => AccountState) => Promise<void>) => {
-//   if (currency === "USD") return { type: "account/deposit", payload: { amount, currency } };
-
-//   return async (dispatch: AppDispatch, getState: () => AccountState): Promise<void> => {
-//     dispatch({ type: "account/convertingCurrent" });
-//     const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`);
-//     const data = await res.json();
-//     const converted = data.rates.USD;
-
-//     dispatch({ type: "account/deposit", payload: converted });
-//   };
-// };
-
-// const withdraw = (amount: number): AccountAction => {
-//   return { type: "account/withdraw", payload: amount };
-// };
-
-// const requestLoan = (amount: number, purpose: string): AccountAction => {
-//   return { type: "account/requestLoan", payload: { amount, purpose } };
-// };
-
-// const payLoan = (): AccountAction => {
-//   return { type: "account/payLoan" };
-// };
-
-// export default accountReducer;
-// export { deposit, withdraw, requestLoan, payLoan };
+export default accountSlice.reducer;

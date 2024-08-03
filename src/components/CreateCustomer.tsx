@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { createCustomer, useAppDispatch } from "../store";
+import { useAppDispatch } from "../hooks";
+import { createCustomer } from "../features/customer/customerSlice";
 
 const CreateCustomer = () => {
   const [fullName, setFullName] = useState("");
@@ -9,7 +10,7 @@ const CreateCustomer = () => {
 
   const handleClick = () => {
     if (fullName && nationalId) {
-      dispatch(createCustomer(fullName, nationalId));
+      dispatch(createCustomer({ fullName, nationalId }));
     }
   };
 
