@@ -21,7 +21,8 @@ const AccountOperations = () => {
 
   const handleDeposit = () => {
     if (depositAmount > 0) {
-      dispatch(deposit({ amount: depositAmount, currency }));
+      // dispatch(deposit({ amount: depositAmount, currency }));
+      dispatch(deposit(depositAmount, currency));
       setDepositAmount(0);
       setCurrency("USD");
     }
