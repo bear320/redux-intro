@@ -10,7 +10,7 @@ const CreateCustomer = () => {
 
   const handleClick = () => {
     if (fullName && nationalId) {
-      dispatch(createCustomer({ fullName, nationalId }));
+      dispatch(createCustomer(fullName, nationalId));
     }
   };
 
